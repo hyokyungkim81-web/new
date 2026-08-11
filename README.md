@@ -1,6 +1,6 @@
 # Calculator
 
-A simple calculator utillity for basic arithmetic operations.
+A simple calculator utility for basic arithmetic operations.
 
 ## Usage
 
