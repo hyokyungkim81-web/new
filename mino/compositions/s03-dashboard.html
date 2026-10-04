@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s03 { position: absolute; inset: 0; overflow: hidden; }
+        #s03 .stage { position: absolute; inset: 0; perspective: 2000px; perspective-origin: 50% 45%; }
+        #s03-float { position: absolute; left: 90px; top: 420px; width: 900px; height: 1080px; transform-style: preserve-3d; }
+        #s03-sway { position: absolute; inset: 0; transform-style: preserve-3d; }
+        #s03-tilt { position: absolute; inset: 0; transform: rotateX(7deg) rotateZ(-4deg); transform-style: preserve-3d; }
+        #s03-glow { position: absolute; left: 60px; top: 90px; width: 780px; height: 980px; border-radius: 80px; background: #c8ff00; filter: blur(72px); opacity: 0.3; }
+        #s03-panel {
+          position: absolute; inset: 0; border-radius: 30px; overflow: hidden;
+          background: linear-gradient(180deg, #171717 0%, #0f0f0f 100%);
+          border: 1px solid rgba(244, 244, 240, 0.09);
+          box-shadow: inset 0 1px 0 rgba(244, 244, 240, 0.42), inset 0 -1px 0 rgba(244, 244, 240, 0.04), 0 90px 140px rgba(0, 0, 0, 0.75), 0 30px 50px rgba(0, 0, 0, 0.5);
+        }
+        #s03 .top { height: 72px; display: flex; align-items: center; gap: 12px; padding: 0 30px; border-bottom: 1px solid rgba(244, 244, 240, 0.07); }
+        #s03 .top i { display: block; width: 13px; height: 13px; border-radius: 50%; background: rgba(244, 244, 240, 0.16); }
+        #s03 .top .brand { margin-left: 14px; font-weight: 600; font-size: 21px; letter-spacing: 0.02em; }
+        #s03 .top .brand b { color: #c8ff00; font-weight: 600; }
+        #s03 .top .search { margin-left: auto; width: 250px; height: 38px; border-radius: 19px; background: rgba(244, 244, 240, 0.06); }
+        #s03 .body { position: absolute; top: 72px; left: 0; right: 0; bottom: 0; display: flex; padding: 28px; gap: 26px; }
+        #s03 .side { position: relative; width: 214px; flex: none; }
+        #s03 .newbtn { position: absolute; left: 0; right: 0; bottom: 4px; height: 64px; border-radius: 16px; background: #c8ff00; color: #0a0a0a; font-size: 20px; font-weight: 600; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(200, 255, 0, 0.6), 0 0 54px rgba(200, 255, 0, 0.25); }
+        #s03 .side h6, #s03 .card h6 { font-size: 15px; font-weight: 400; letter-spacing: 0.12em; color: rgba(244, 244, 240, 0.62); }
+        #s03 .side h6 { margin: 6px 0 16px 6px; }
+        #s03 .proj { display: flex; align-items: center; gap: 12px; height: 60px; padding: 0 12px; border-radius: 14px; font-size: 19px; margin-bottom: 8px; background: rgba(244, 244, 240, 0.035); }
+        #s03 .proj.on { background: rgba(200, 255, 0, 0.1); color: #c8ff00; }
+        #s03 .proj span { display: block; width: 26px; height: 26px; border-radius: 8px; flex: none; }
+        #s03 .main { flex: 1; display: flex; flex-direction: column; gap: 22px; }
+        #s03 .cards { display: flex; gap: 16px; }
+        #s03 .card { position: relative; flex: 1; height: 150px; border-radius: 18px; padding: 18px 18px; background: rgba(244, 244, 240, 0.045); border: 1px solid rgba(244, 244, 240, 0.07); }
+        #s03 .card.hot { background: rgba(200, 255, 0, 0.08); border-color: rgba(200, 255, 0, 0.35); }
+        #s03 .num { display: flex; align-items: flex-end; margin-top: 14px; height: 70px; }
+        #s03 .odo { display: flex; height: 70px; overflow: hidden; font-size: 64px; line-height: 70px; font-weight: 600; letter-spacing: -0.02em; }
+        #s03 .card.hot .odo { color: #c8ff00; }
+        #s03 .card.hot .num { filter: drop-shadow(0 0 10px rgba(200, 255, 0, 0.8)) drop-shadow(0 0 26px rgba(200, 255, 0, 0.35)); }
+        #s03 .col { width: 0.62em; text-align: center; }
+        #s03 .strip { display: block; }
+        #s03 .strip b { display: block; height: 70px; font-weight: 600; }
+        #s03 .unit { font-size: 22px; margin: 0 0 10px 6px; color: rgba(244, 244, 240, 0.7); }
+        #s03 .charts { display: flex; gap: 16px; height: 300px; }
+        #s03 .chart { position: relative; border-radius: 18px; padding: 18px; background: rgba(244, 244, 240, 0.045); border: 1px solid rgba(244, 244, 240, 0.07); }
+        #s03 .chart.line { flex: 1; }
+        #s03 .chart.bars { width: 214px; flex: none; }
+        #s03 .chart svg { position: absolute; left: 18px; top: 58px; overflow: visible; }
+        #s03 .barrow { position: absolute; left: 20px; right: 20px; bottom: 22px; height: 196px; display: flex; align-items: flex-end; justify-content: space-between; }
+        #s03 .bar { display: block; width: 18px; border-radius: 6px 6px 3px 3px; background: rgba(244, 244, 240, 0.28); transform-origin: 50% 100%; }
+        #s03 .bar.hi { background: #c8ff00; box-shadow: 0 0 16px rgba(200, 255, 0, 0.8), 0 0 40px rgba(200, 255, 0, 0.35); }
+        #s03 .table { position: relative; flex: 1; border-radius: 18px; padding: 10px 18px 14px; background: rgba(244, 244, 240, 0.045); border: 1px solid rgba(244, 244, 240, 0.07); }
+        #s03 .tr { position: relative; display: flex; align-items: center; height: 62px; font-size: 19px; border-bottom: 1px solid rgba(244, 244, 240, 0.06); }
+        #s03 .tr.head { height: 52px; font-size: 15px; letter-spacing: 0.06em; color: rgba(244, 244, 240, 0.62); }
+        #s03 .tr > div { position: relative; flex: 1; text-align: right; }
+        #s03 .tr > div:first-child { flex: 2.1; text-align: left; padding-left: 8px; }
+        #s03 .tr > div:last-child { padding-right: 8px; }
+        #s03 .tr .hl { position: absolute; left: -8px; right: -8px; top: 6px; bottom: 6px; border-radius: 12px; background: #c8ff00; transform-origin: 0 50%; box-shadow: 0 0 22px rgba(200, 255, 0, 0.7), 0 0 60px rgba(200, 255, 0, 0.3); }
+      </style>
+
+      <div id="s03" data-composition-id="s03" data-width="1080" data-height="1920">
+        <div class="bg-black">
+          <div class="bg-pool" id="s03-pool" data-layout-allow-overflow></div>
+          <div class="bg-grid" id="s03-grid" data-layout-allow-overflow></div>
+        </div>
+
+        <svg width="0" height="0" style="position: absolute">
+          <filter id="s03-vblur" x="-10%" y="-30%" width="120%" height="160%">
+            <feGaussianBlur id="s03-vblur-std" stdDeviation="0 0" />
+          </filter>
+        </svg>
+
+        <div class="stage">
+          <div id="s03-float">
+            <div id="s03-sway">
+              <div id="s03-tilt">
+                <div id="s03-glow"></div>
+                <div id="s03-panel">
+                  <div class="top"><i></i><i></i><i></i><div class="brand"><b>MINO</b> Studio</div><div class="search"></div></div>
+                  <div class="body">
+                    <div class="side">
+                      <h6>PROJECTS</h6>
+                      <div class="proj on s03-side"><span style="background: #c8ff00"></span>클로드 릴스</div>
+                      <div class="proj s03-side"><span style="background: #ff6b9a"></span>런칭 티저</div>
+                      <div class="proj s03-side"><span style="background: #7aa8ff"></span>뉴스 요약</div>
+                      <div class="proj s03-side"><span style="background: #ffb84d"></span>언박싱 숏츠</div>
+                      <div class="proj s03-side"><span style="background: #b38cff"></span>브이로그</div>
+                      <div class="newbtn" id="s03-new">+ 새 영상</div>
+                    </div>
+                    <div class="main">
+                      <div class="cards">
+                        <div class="card hot s03-card"><h6>이번 주 제작</h6><div class="num"><div class="odo" data-value="24"></div><div class="unit">편</div></div></div>
+                        <div class="card s03-card"><h6>평균 제작 시간</h6><div class="num"><div class="odo" data-value="4"></div><div class="unit">분</div></div></div>
+                        <div class="card s03-card"><h6>진행 중</h6><div class="num"><div class="odo" data-value="3"></div><div class="unit">건</div></div></div>
+                      </div>
+                      <div class="charts">
+                        <div class="chart line">
+                          <h6 style="font-size: 15px; font-weight: 400; letter-spacing: 0.12em; color: rgba(244, 244, 240, 0.62)">VIEWS · 30D</h6>
+                          <svg width="330" height="200" viewBox="0 0 330 200">
+                            <defs>
+                              <linearGradient id="s03-area" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0" stop-color="#c8ff00" stop-opacity="0.35" />
+                                <stop offset="1" stop-color="#c8ff00" stop-opacity="0" />
+                              </linearGradient>
+                            </defs>
+                            <g stroke="rgba(244,244,240,0.07)" stroke-width="1">
+                              <line x1="0" y1="50" x2="330" y2="50" /><line x1="0" y1="100" x2="330" y2="100" /><line x1="0" y1="150" x2="330" y2="150" />
+                            </g>
+                            <path id="s03-areapath" fill="url(#s03-area)" d="M0 172 C 30 168, 45 150, 66 146 S 110 160, 132 128 S 176 112, 198 98 S 240 104, 264 70 S 300 40, 330 22 L 330 200 L 0 200 Z" />
+                            <path id="s03-linepath" fill="none" stroke="#c8ff00" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" style="filter: drop-shadow(0 0 6px rgba(200,255,0,0.9)) drop-shadow(0 0 18px rgba(200,255,0,0.5))" d="M0 172 C 30 168, 45 150, 66 146 S 110 160, 132 128 S 176 112, 198 98 S 240 104, 264 70 S 300 40, 330 22" />
+                            <circle id="s03-tip" cx="330" cy="22" r="9" fill="#c8ff00" style="filter: drop-shadow(0 0 10px rgba(200,255,0,1))" />
+                          </svg>
+                        </div>
+                        <div class="chart bars">
+                          <h6 style="font-size: 15px; font-weight: 400; letter-spacing: 0.12em; color: rgba(244, 244, 240, 0.62)">DAILY</h6>
+                          <div class="barrow">
+                            <div class="bar s03-bar" style="height: 82px"></div>
+                            <div class="bar s03-bar" style="height: 118px"></div>
+                            <div class="bar s03-bar" style="height: 96px"></div>
+                            <div class="bar s03-bar" style="height: 142px"></div>
+                            <div class="bar s03-bar" style="height: 128px"></div>
+                            <div class="bar hi s03-bar" style="height: 190px"></div>
+                            <div class="bar s03-bar" style="height: 160px"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="table">
+                        <div class="tr head s03-row"><div>프로젝트명</div><div>조회수</div><div>저장</div><div>공유</div><div>완료율</div></div>
+                        <div class="tr s03-row" id="s03-hlrow"><div class="hl" id="s03-hl"></div><div>클로드 릴스</div><div>128K</div><div>9.4K</div><div>3.1K</div><div>92%</div></div>
+                        <div class="tr s03-row"><div>런칭 티저</div><div>86K</div><div>5.2K</div><div>1.8K</div><div>88%</div></div>
+                        <div class="tr s03-row"><div>뉴스 요약</div><div>64K</div><div>3.9K</div><div>1.2K</div><div>81%</div></div>
+                        <div class="tr s03-row"><div>언박싱 숏츠</div><div>52K</div><div>2.7K</div><div>960</div><div>77%</div></div>
+                        <div class="tr s03-row"><div>브이로그</div><div>41K</div><div>2.1K</div><div>740</div><div>74%</div></div>
+                        <div class="tr s03-row" style="border-bottom: 0"><div>레시피 30초</div><div>33K</div><div>1.6K</div><div>510</div><div>69%</div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const G0 = 6; // global start time of this scene
+          const DUR = 4;
+          const POOL_PHASE = 0.15; // where the lime light sits for this scene (fraction of its 10s orbit)
+          const q = (s) => document.querySelector("#s03 " + s);
+          const qa = (s) => Array.from(document.querySelectorAll("#s03 " + s));
+
+          // Odometer counters: one 0-9 strip per digit, rolled from 0.
+          qa(".odo").forEach((odo) => {
+            const v = odo.dataset.value;
+            v.split("").forEach((d, i) => {
+              const col = document.createElement("div");
+              col.className = "col";
+              const strip = document.createElement("div");
+              strip.className = "strip";
+              strip.setAttribute("data-layout-allow-overflow", "");
+              for (let k = 0; k < 20; k++) {
+                const b = document.createElement("b");
+                b.textContent = k % 10;
+                strip.appendChild(b);
+              }
+              // Lower digits spin a full turn extra so every counter visibly rolls.
+              strip.dataset.target = Number(d) + (i === v.length - 1 ? 10 : 0);
+              col.appendChild(strip);
+              odo.appendChild(col);
+            });
+          });
+
+          const tl = gsap.timeline({ paused: true });
+
+          // Background: grid drifts diagonally, light pool orbits on a 10s period.
+          tl.fromTo("#s03-grid", { x: 0, y: 0 }, { x: 40, y: 40, duration: DUR, ease: "none" }, 0);
+          const poolAt = (t) => {
+            const a = 2 * Math.PI * ((G0 + t) / 10 + POOL_PHASE);
+            return { x: 540 + 430 * Math.cos(a), y: 700 + 620 * Math.sin(a) };
+          };
+          const keys = [];
+          for (let t = 0; t <= DUR + 1e-9; t += 0.25) keys.push(poolAt(t));
+          tl.fromTo("#s03-pool", keys[0], { keyframes: keys.slice(1), duration: DUR, ease: "none" }, 0);
+          tl.fromTo("#s03-pool", { opacity: 0.18 }, { opacity: 0.25, duration: 1, ease: "sine.inOut", yoyo: true, repeat: 3, immediateRender: false }, 0);
+
+          // Panel floats up empty, with a vertical shutter blur that clears.
+          tl.fromTo("#s03-float", { y: 560, opacity: 0, scale: 0.92, rotationX: 16 },
+            { y: 0, opacity: 1, scale: 1, rotationX: 0, duration: 0.45, ease: "power3.out" }, 0);
+          tl.set("#s03-float", { filter: "url(#s03-vblur)" }, 0);
+          tl.fromTo("#s03-vblur-std", { attr: { stdDeviation: "0 46" } }, { attr: { stdDeviation: "0 0" }, duration: 0.4, ease: "power2.out" }, 0);
+          tl.set("#s03-float", { filter: "none" }, 0.41);
+
+          // Constant motion: slow ±6° sway, gentle push in/out, breathing glow.
+          tl.fromTo("#s03-sway", { rotationY: -6 }, { rotationY: 6, duration: 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+          tl.fromTo("#s03-sway", { z: -40 }, { z: 50, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 1, immediateRender: false }, 0.4);
+          tl.fromTo("#s03-glow", { opacity: 0.22 }, { opacity: 0.38, duration: 0.8, ease: "sine.inOut", yoyo: true, repeat: 4 }, 0);
+
+          // Sidebar: 5 projects, top to bottom, 0.08s apart.
+          tl.fromTo(qa(".s03-side"), { x: -36, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power3.out", stagger: 0.08 }, 0.45);
+
+          tl.fromTo("#s03-new", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 0.85);
+
+          // KPI cards pop left to right; their digits roll up from 0.
+          tl.fromTo(qa(".s03-card"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.38, ease: "back.out(2.2)", stagger: 0.1 }, 0.9);
+          qa(".s03-card").forEach((card, ci) => {
+            card.querySelectorAll(".strip").forEach((strip) => {
+              tl.fromTo(strip, { y: 0 }, { y: -70 * Number(strip.dataset.target), duration: 0.75, ease: "power3.out" }, 0.95 + ci * 0.1);
+            });
+          });
+
+          // Line graph draws left to right in 0.8s, then the area and tip arrive.
+          tl.fromTo("#s03-linepath", { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.8, ease: "power2.inOut" }, 1.3);
+          tl.fromTo("#s03-areapath", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out" }, 1.75);
+          tl.fromTo("#s03-tip", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, 2.08);
+
+          // Seven bars rise left to right.
+          tl.fromTo(qa(".s03-bar"), { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "back.out(1.5)", stagger: 0.06 }, 1.85);
+
+          // Table builds row by row, then one row lights up lime.
+          tl.fromTo(qa(".s03-row"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.24, ease: "power2.out", stagger: 0.1 }, 2.3);
+          tl.fromTo("#s03-hl", { scaleX: 0 }, { scaleX: 1, duration: 0.26, ease: "power3.out" }, 3.2);
+          tl.fromTo(qa("#s03-hlrow > div:not(.hl)"), { color: "#f4f4f0" }, { color: "#0a0a0a", duration: 0.12, ease: "none" }, 3.26);
+
+          window.__timelines["s03"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

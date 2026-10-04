@@ -1,0 +1,36 @@
+/* MINO — shared tokens and background layers. Linked from every host page; @font-face lives in each host. */
+
+:root {
+  --ink: #0a0a0a;
+  --lime: #c8ff00;
+  --white: #f4f4f0;
+  --lime-deep: #2a4a00;
+  --lime-dim: #1a2e00;
+  --glow: 0 0 18px rgba(200, 255, 0, 0.75), 0 0 48px rgba(200, 255, 0, 0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0a0a0a; }
+body { font-family: "Pretendard", sans-serif; color: var(--white); -webkit-font-smoothing: antialiased; }
+
+/* Full-frame scene layers */
+.layer { position: absolute; inset: 0; }
+
+/* Black scene background: drifting 80px grid + lime light pool */
+.bg-black { position: absolute; inset: 0; background: #0a0a0a; overflow: hidden; }
+.bg-grid {
+  position: absolute; left: -160px; top: -160px; width: 1400px; height: 2240px;
+  background-image:
+    linear-gradient(rgba(244, 244, 240, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 244, 240, 0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+.bg-pool {
+  position: absolute; width: 1600px; height: 1600px; left: -800px; top: -800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(42, 74, 0, 0.95) 0%, rgba(26, 46, 0, 0.7) 32%, rgba(26, 46, 0, 0) 70%);
+  opacity: 0.22;
+}
+
+/* HUD (40% opacity) */
+.hud { position: absolute; inset: 0; pointer-events: none; font-family: "Plex Mono", monospace; font-weight: 500; color: var(--white); opacity: 0.4; }

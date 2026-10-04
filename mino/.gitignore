@@ -1,0 +1,6 @@
+node_modules/
+snapshots/
+tests/t*/assets/
+tests/t*/compositions/
+.hyperframes/
+renders/.hf-segments/
