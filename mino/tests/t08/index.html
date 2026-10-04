@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>MINO · test 08 phone</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/mino.css" />
+    <style>
+      @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard-Regular.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard-SemiBold.woff2") format("woff2"); font-weight: 600; }
+      @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard-ExtraBold.woff2") format("woff2"); font-weight: 800; }
+      @font-face { font-family: "Plex Mono"; src: url("assets/fonts/IBMPlexMono-Medium.woff2") format("woff2"); font-weight: 500; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="test08" data-start="0" data-duration="4" data-width="1080" data-height="1920" data-fps="60" style="position: relative; width: 100%; height: 100%; overflow: hidden">
+      <div id="s08" class="clip" data-composition-id="s08" data-composition-src="compositions/s08-phone.html" data-start="0" data-duration="4" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="hud" class="clip" data-composition-id="hud" data-composition-src="compositions/hud.html" data-variable-values='{"offset":21.5}' data-start="0" data-duration="4" data-track-index="9" data-width="1080" data-height="1920"></div>
+    </div>
+    <script>
+      window.__timelines["test08"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
